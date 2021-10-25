@@ -1191,7 +1191,7 @@ async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
     # insert code here to run it after start
 
-
+@dp.message_handler()
 async def on_shutdown(dp):
 
 
