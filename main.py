@@ -3,10 +3,24 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.dispatcher.filters import Text
 from config import TOKEN
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.dispatcher.webhook import SendMessage
+from aiogram.utils.executor import start_webhook
 
 import keyboards as kb
-bot = Bot(token=TOKEN)
+API_TOKEN = '2021251162:AAF8vN_jq005UctlNYnRxerMMnJ__RmdOfY'
+
+WEBHOOK_HOST = 'https://git.heroku.com/whoo-am-i.git'
+WEBHOOK_PATH = '/path/to/api'
+WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+
+WEBAPP_HOST = '0.0.0.0'  # or ip
+WEBAPP_PORT = 3001
+
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
+dp.middleware.setup(LoggingMiddleware())
+
 
 
 @dp.message_handler(commands=['start'])
@@ -1172,6 +1186,41 @@ async def luke(message: types.Message):
 
 
 
+
+async def on_startup(dp):
+    await bot.set_webhook(WEBHOOK_URL)
+    # insert code here to run it after start
+
+
+async def on_shutdown(dp):
+
+
+    # insert code here to run it before shutdown
+
+    # Remove webhook (not acceptable in some cases)
+    await bot.delete_webhook()
+
+    # Close DB connection (if used)
+    await dp.storage.close()
+    await dp.storage.wait_closed()
+
+
+
+if __name__ == '__main__':
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
+        skip_updates=True,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )
+
+
+
+'''
 if __name__ == '__main__':
     executor.start_polling(dp)
     
+'''
