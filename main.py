@@ -1186,7 +1186,7 @@ async def luke(message: types.Message):
 
 
 
-
+@dp.message_handler()
 async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
     # insert code here to run it after start
