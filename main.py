@@ -10,8 +10,8 @@ from aiogram.utils.executor import start_webhook
 import keyboards as kb
 API_TOKEN = '2021251162:AAF8vN_jq005UctlNYnRxerMMnJ__RmdOfY'
 
-WEBHOOK_HOST = 'https://git.heroku.com/whoo-am-i.git'
-WEBHOOK_PATH = '/path/to/api'
+WEBHOOK_HOST = 'https://whoo-am-i.herokuapp.com/'
+WEBHOOK_PATH = API_TOKEN
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 WEBAPP_HOST = '0.0.0.0'  # or ip
