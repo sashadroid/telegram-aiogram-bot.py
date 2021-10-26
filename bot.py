@@ -1,4 +1,4 @@
-import os
+
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -9,12 +9,6 @@ import keyboards as kb
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-from flask import Flask, request
-import sqlite3
-
-APP_URL = f'https://whoo-am-i.herokuapp.com/{bot}'
-
-server = Flask(__name__)
 
 @dp.message_handler(commands=['start'])
 async def hi(message: types.Message):
@@ -1178,20 +1172,5 @@ async def luke(message: types.Message):
 Вы - плохой человек! ', reply_markup=kb.markup0)
 
 
-
-@server.route('/')
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url=APP_URL)
-    return '!', 200
-
-
-if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
-
-
-
-'''
 if __name__ == '__main__':
     executor.start_polling(dp)
-'''
