@@ -2,8 +2,6 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.dispatcher.filters import Text
-import logging
-import random
 from config import TOKEN
 
 import keyboards as kb
